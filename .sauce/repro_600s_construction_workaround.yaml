@@ -7,7 +7,7 @@ xctest:
   app: ./build/ios_integ/Build/Products/Runner.ipa
   xcTestRunFile: ./build/ios_integ/Build/Products/Runner_iphoneos26.5-arm64.xctestrun
 suites:
-  - name: "Basic XCTest Real Device"
+  - name: "600s repro - construction-phase watchdog workaround (real Dart test)"
     devices:
       - name: ".*"
 artifacts:
@@ -15,4 +15,4 @@ artifacts:
     when: always
     match:
       - "*.*"
-    directory: ./
+    directory: ./repro-600s-construction-workaround-artifacts

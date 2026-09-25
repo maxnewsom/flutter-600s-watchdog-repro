@@ -7,7 +7,9 @@ xctest:
   app: ./build/ios_integ/Build/Products/Runner.ipa
   xcTestRunFile: ./build/ios_integ/Build/Products/Runner_iphoneos26.5-arm64.xctestrun
 suites:
-  - name: "Basic XCTest Real Device"
+  - name: "600s repro - 6 sequential native tests (result every 2 min)"
+    shard: concurrency
+    #numShards: 2
     devices:
       - name: ".*"
 artifacts:
@@ -15,4 +17,4 @@ artifacts:
     when: always
     match:
       - "*.*"
-    directory: ./
+    directory: ./repro-600s-sequential-artifacts

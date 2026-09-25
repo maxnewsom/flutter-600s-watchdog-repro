@@ -1,6 +1,8 @@
 DERIVED_DATA_PATH=../build/ios_integ
 OUTPUT_DIR=./build/ios_integ/Build/Products
 FLUTTER_INTEGRATION_TEST_DART_FILE=$(realpath integration_test/flutter_integration_test.dart)
+ONLY_TESTING=
+EXTRA_BUILD_SETTINGS=
 build-ios-release:
 	flutter build ios $(FLUTTER_INTEGRATION_TEST_DART_FILE) --release
 build-for-testing: build-ios-release
@@ -12,10 +14,13 @@ build-for-testing: build-ios-release
 	  -xcconfig Flutter/Release.xcconfig \
 	  -configuration Release \
 	  -derivedDataPath $(DERIVED_DATA_PATH) \
+	  $(if $(ONLY_TESTING),-only-testing:$(ONLY_TESTING)) \
+	  $(EXTRA_BUILD_SETTINGS) \
 	  build-for-testing
 
 build-ios-ipa-files: build-for-testing
 	cd $(OUTPUT_DIR) \
+	&& rm -rf Payload Runner.ipa \
 	&& mkdir -p Payload \
 	&& cp -r Release-iphoneos/Runner.app Payload \
 	&& zip -r Runner.ipa Payload
